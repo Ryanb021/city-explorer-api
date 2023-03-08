@@ -37,7 +37,7 @@ const PORT = process.env.PORT || 3002;
 // the first arugment is a URL in quote
 // the second is the callback that defines what should happen when aa request comes into that url
 app.get('/', (request, response) => {
-  response.send('Aloha! This is the server of Batman!');
+  response.send('Aloha! This is the Batman server!');
 });
 
 app.get('/robin', (request, response) => {
