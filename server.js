@@ -49,20 +49,38 @@ app.get('/robin', (request, response) => {
 
 //requesting data from weather.json? Maybe? A ROUTE!!!
 //route: http://localhost:3001/weather?city_name=Seattle
-app.get('/weather', (request, response) => {
-  //try {
-  let cityRequested = request.query.city_name;
-  // find the object in the data array from (./data/weather.json) which requires lat, lon, city name as requested    
-  let cityDataRequest = object.find(weather => weather.city_name === cityRequested);
-  //let selectedLatObject = new Lat(latObject);
-  response.send(cityDataRequest);
+app.get('/weather', (request, response, next) => {
+  try {
+    let cityRequested = request.query.city_name;
+    // find the object in the data array from (./data/weather.json) which requires lat, lon, city name as requested    
+    let cityDataRequest = object.find(weather => weather.city_name === cityRequested);
+    //let selectedLatObject = new Lat(latObject);
+    response.send(cityDataRequest);
+
+  }
+  catch (error) {
+    next(error)
+
+  }
 
 });
-//   catch (error) {
-//    next(error)
 
-//}
+// listed last in route list
+app.get('*', (req, res) => {
+  res.send('The source does not exist');
+});
 
+//CLASSES
+class Weathers {
+  constructor(CityRequest) {
+    this.lat = CityRequest.lat;
+    this.lon = CityRequest.lon;
+  }
+}
+// ERRORS
+app.use((error, reuest, response, next) => {
+  response.status(500).send(error.message);
+});
 //LISTEN, needs server started, tarhets express method that it takes in 2 arguments, needs a port value and a callback function
 
 
