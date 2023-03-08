@@ -48,18 +48,27 @@ app.get('/robin', (request, response) => {
 });
 
 //requesting data from weather.json? Maybe? A ROUTE!!!
-//route: http://localhost:3001/weather?city_name=Seattle
+//route: http://localhost:3001/weather?search=Seattle
 app.get('/weather', (request, response, next) => {
   try {
-    let cityRequested = request.query.city_name;
+
+    //specific data asking method. whatever.
+    let search = request.query.search;
     // find the object in the data array from (./data/weather.json) which requires lat, lon, city name as requested    
-    let cityDataRequest = object.find(weather => weather.city_name === cityRequested);
-    //let selectedLatObject = new Lat(latObject);
-    response.send(cityDataRequest);
+    let cityDataRequest = object.find(i => i.city_name.toLowerCase() === search.toLowerCase());
+
+    let renderCityWeather =[];
+    for (let k = 0; k < cityDataRequest.data.length; k++) {
+      let cityWeatherObject = new Weathers(cityDataRequest, k);
+
+      renderCityWeather.push(cityWeatherObject);
+    }
+    // The hell am I doing?
+    response.send(renderCityWeather);
 
   }
   catch (error) {
-    next(error)
+    next(error);
 
   }
 
@@ -67,19 +76,19 @@ app.get('/weather', (request, response, next) => {
 
 // listed last in route list
 app.get('*', (req, res) => {
-  res.send('The source does not exist');
+  res.send('You gotta be kidding me. This crap does not exist!');
 });
 
-//CLASSES
+//CLASSES description.???? I HATE MY LIFE!!!
 class Weathers {
-  constructor(CityRequest) {
-    this.lat = CityRequest.lat;
-    this.lon = CityRequest.lon;
+  constructor(CityWeatherRequest, i) {
+    this.date = CityWeatherRequest.data[i].datetime;
+    this.description = `Low of ${CityWeatherRequest.data[i].low_temp.toString()}, high of ${CityWeatherRequest.data[i].max_temp.toString()} with ${CityWeatherRequest.data[i].weather.description}`;
   }
 }
 // ERRORS
-app.use((error, reuest, response, next) => {
-  response.status(500).send(error.message);
+app.use((error, request, response, next) => {
+  response.status(500).send(`ERROR MY FRIEND: ${error.message}`);
 });
 //LISTEN, needs server started, tarhets express method that it takes in 2 arguments, needs a port value and a callback function
 
