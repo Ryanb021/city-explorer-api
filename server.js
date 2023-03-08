@@ -10,7 +10,7 @@ const express = require('express');
 require('dotenv').config();
 
 //read weather data from weather.json file?
-let weatherData = require('./data/weather.json');
+let object = require('./data/weather.json');
 
 // we must include cors if we want to share resources over the web
 const cors = require('cors');
@@ -40,27 +40,28 @@ app.get('/', (request, response) => {
   response.send('Aloha! This is the server of Batman!');
 });
 
-app.get('/weather', (request, response) => {
-  console.log(request.query.lat);
+app.get('/robin', (request, response) => {
+  console.log(request.query.name);
 
-  let lat = request.query.lat;
-  response.send('I am Robin!');
+  let name = request.query.name;
+  response.send('I am Robin! Really');
 });
 
-//requesting data from weather.json? Maybe?
-app.get('./data/weather', request, response, next) => {
-  try {
-    let dataRequested = request.query.lat;
-// find the lat in the data array from (./data/weather.json) which requires lat as requested    
-let latObject = data.find();
-let selectedLatObject = new Lat(latObject);
-respond.send(selectedLatObject);
+//requesting data from weather.json? Maybe? A ROUTE!!!
+//route: http://localhost:3001/weather?city_name=Seattle
+app.get('/weather', (request, response) => {
+  //try {
+  let cityRequested = request.query.city_name;
+  // find the object in the data array from (./data/weather.json) which requires lat, lon, city name as requested    
+  let cityDataRequest = object.find(weather => weather.city_name === cityRequested);
+  //let selectedLatObject = new Lat(latObject);
+  response.send(cityDataRequest);
 
-  } catch (error) {
-    next(error)
-  
-  }
-}
+});
+//   catch (error) {
+//    next(error)
+
+//}
 
 //LISTEN, needs server started, tarhets express method that it takes in 2 arguments, needs a port value and a callback function
 
