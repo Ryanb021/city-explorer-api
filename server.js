@@ -15,6 +15,9 @@ let object = require('./data/weather.json');
 // we must include cors if we want to share resources over the web
 const cors = require('cors');
 
+//use axios to request route, so we require axios in server
+const axios =require('axios');
+
 // USE
 // once we require something, we have to use it
 // this is where we assign  the required file a variable
@@ -47,19 +50,42 @@ app.get('/robin', (request, response) => {
   response.send('I am Robin! Really');
 });
 
+//movie request route... please work.
+app.get('/movies', async (request, response, next) => {
+  try {
+    let tomcruise = request.query.tomcruise;
+    let tomCruiseApi = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&query=${tomcruise}&page=1&include_adult=false`);
+
+    let sortTomCruiseMovies = tomCruiseApi.data.results.map(i => new Movies(i));
+    response.send(sortTomCruiseMovies);
+
+  } catch (error) {
+    next (error);
+  }
+})
+
 //requesting data from weather.json? Maybe? A ROUTE!!!
 //route: http://localhost:3001/weather?search=Seattle
-app.get('/weather', (request, response, next) => {
+app.get('/weather', async (request, response, next) => {
   try {
 
+    let lat = request.query.lat;
+    let lon = request.query.lon;
+
+    let weatherApi = await axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?&lat=${lat}&lon=${lon}&days=6&units=I&key=${process.env.WEATHER_API_KEY}`);
+
     //specific data asking method. whatever.
-    let search = request.query.search;
-    // find the object in the data array from (./data/weather.json) which requires lat, lon, city name as requested    
-    let cityDataRequest = object.find(i => i.city_name.toLowerCase() === search.toLowerCase());
+    //let search = request.query.search;
+    // find the object in the data array from (./data/weather.json) which requires lat, lon, city name as requested
+    //let cityDataRequest = object.find(i => i.city_name.toLowerCase() === search.toLowerCase());
+
+    //route request for lat and lon
+
+    let latLonRequest = weatherApi.data;
 
     let renderCityWeather =[];
-    for (let k = 0; k < cityDataRequest.data.length; k++) {
-      let cityWeatherObject = new Weathers(cityDataRequest, k);
+    for (let k = 0; k < latLonRequest.data.length; k++) {
+      let cityWeatherObject = new Weathers(latLonRequest, k);
 
       renderCityWeather.push(cityWeatherObject);
     }
@@ -84,6 +110,19 @@ class Weathers {
   constructor(CityWeatherRequest, i) {
     this.date = CityWeatherRequest.data[i].datetime;
     this.description = `Low of ${CityWeatherRequest.data[i].low_temp.toString()}, high of ${CityWeatherRequest.data[i].max_temp.toString()} with ${CityWeatherRequest.data[i].weather.description}`;
+  }
+}
+
+//CLASSES for movies. AAAAAAHHHHHHHHHHHHHHHH!!!!!!!!!!!
+class Movies {
+  constructor (searchTomCruise) {
+    this.title = searchTomCruise.original_title;
+    this.overview = searchTomCruise.overview;
+    this.average_votes = searchTomCruise.vote_average;
+    this.total_votes = searchTomCruise.vote_count;
+    this.image_url = `https://image.tmdb.org/t/p/w500${searchTomCruise.poster_path}`;
+    this.popularity = searchTomCruise.popularity;
+    this.released_on = searchTomCruise.release_date;
   }
 }
 // ERRORS
