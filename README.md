@@ -20,5 +20,10 @@
 
 ## Credit and Collaborations
 
+- March 6, 2023: Mohammed Abubakar
 - March 7, 2023: Phillip Chaplin
 - March 8, 2023: Nate Brown
+
+## Outline
+
+![Lab 06 Outline](https://user-images.githubusercontent.com/120413183/223247422-3137510a-23c1-48d9-a6f0-f68335c57ca1.png)
