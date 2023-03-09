@@ -16,7 +16,7 @@ let object = require('./data/weather.json');
 const cors = require('cors');
 
 //use axios to request route, so we require axios in server
-const axios =require('axios');
+const axios = require('axios');
 
 // USE
 // once we require something, we have to use it
@@ -57,10 +57,11 @@ app.get('/movies', async (request, response, next) => {
     let tomCruiseApi = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&query=${tomcruise}&page=1&include_adult=false`);
 
     let sortTomCruiseMovies = tomCruiseApi.data.results.map(i => new Movies(i));
+    console.log(sortTomCruiseMovies);
     response.send(sortTomCruiseMovies);
 
   } catch (error) {
-    next (error);
+    next(error);
   }
 })
 
@@ -72,7 +73,12 @@ app.get('/weather', async (request, response, next) => {
     let lat = request.query.lat;
     let lon = request.query.lon;
 
-    let weatherApi = await axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?&lat=${lat}&lon=${lon}&days=6&units=I&key=${process.env.WEATHER_API_KEY}`);
+    console.log(lat);
+    console.log(lon);
+
+    let weatherApi = await axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?&lat=${lat}&lon=${lon}&days=5&units=I&key=${process.env.WEATHER_API_KEY}`);
+
+   
 
     //specific data asking method. whatever.
     //let search = request.query.search;
@@ -83,7 +89,7 @@ app.get('/weather', async (request, response, next) => {
 
     let latLonRequest = weatherApi.data;
 
-    let renderCityWeather =[];
+    let renderCityWeather = [];
     for (let k = 0; k < latLonRequest.data.length; k++) {
       let cityWeatherObject = new Weathers(latLonRequest, k);
 
@@ -115,7 +121,7 @@ class Weathers {
 
 //CLASSES for movies. AAAAAAHHHHHHHHHHHHHHHH!!!!!!!!!!!
 class Movies {
-  constructor (searchTomCruise) {
+  constructor(searchTomCruise) {
     this.title = searchTomCruise.original_title;
     this.overview = searchTomCruise.overview;
     this.average_votes = searchTomCruise.vote_average;
