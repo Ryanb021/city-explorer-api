@@ -1,8 +1,7 @@
 'use strict'
 const axios = require('axios');
 
-//add cache
-let cache = {};
+
 
 class Weathers {
   constructor(CityWeatherRequest, i) {
@@ -16,20 +15,20 @@ async function getWeather(request, response, next) {
 
     let lat = request.query.lat;
     let lon = request.query.lon;
-
+  
     console.log(lat);
     console.log(lon);
 
-    let params ={
-      lat:  lat,
-      lon: lon,
-      days: 5,
-      //units: I,
-      key: process.env.WEATHER_API_KEY
+    //let params ={
+    //  lat:  lat,
+    //  lon: lon,
+    //  days: 5,
+    // //units: I,
+    //  key: process.env.WEATHER_API_KEY
 
-    };
+    //};
 
-    let weatherApi = await axios.get(`https://api.weatherbit.io/v2.0/forecast/daily`, { params });
+    let weatherApi = await axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?&lat=${lat}&lon=${lon}&days=5&units=I&key=${process.env.WEATHER_API_KEY}`);
 
 
 

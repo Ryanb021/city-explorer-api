@@ -30,9 +30,9 @@ async function getMovies(request, response, next) {
     //page: 1,
     //include_adult: false
 
-    //let timeToCache = 1000 * 60 * 60 * 24 * 7;
-    let timeToTestCache = 1000 * 20;
-    if (cache[key] && Date.now() - cache[key].timestamp < timeToTestCache) {
+    let timeToCache = 1000 * 60 * 60 * 24 * 7;
+    //let timeToTestCache = 1000 * 20;
+    if (cache[key] && Date.now() - cache[key].timestamp < timeToCache) {
       //if the data is already cached and it is recent enough, send the cached data
       console.log('Tom Cruise is already in the cache');
       response.status(200).send(cache[key]);
