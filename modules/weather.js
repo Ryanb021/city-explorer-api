@@ -21,7 +21,7 @@ async function getWeather(request, response, next) {
       lat:  lat,
       lon: lon,
       days: 5,
-      units: I,
+      //units: I,
       key: process.env.WEATHER_API_KEY
 
     };
