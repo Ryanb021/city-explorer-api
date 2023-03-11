@@ -26,4 +26,95 @@
 
 ## Outline
 
+## LAB 06 Name of feature: 
+
+Draw WRRC (Web Request-Response Cycle)
+
+## Estimate of time needed to complete: 
+
+10 minutes
+
+## Start time: 
+
+1:00 pm
+
+## Finish time: 
+
+1:10 pm
+
+## Actual time needed to complete: 
+
+10 minutes
+
 ![Lab 06 Outline](https://user-images.githubusercontent.com/120413183/223247422-3137510a-23c1-48d9-a6f0-f68335c57ca1.png)
+
+## LAB 07 Name of feature: 
+
+Custom Servers with Node and Express
+
+## Estimate of time needed to complete: 
+
+3 hours
+
+## Start time: 
+
+12:30 pm
+
+## Finish time: 
+
+5:30 pm
+
+## Actual time needed to complete: 
+
+5 hours
+
+## LAB 08 Name of feature: 
+
+Weatherbit API and Movie DB API
+
+## Estimate of time needed to complete: 
+
+3 hours
+
+## Start time: 
+
+12:15 pm
+
+## Finish time: 
+
+6:15 pm
+
+## Actual time needed to complete: 
+
+6 hours
+
+## Name of feature: 
+
+Refractoring into Modules
+
+## Estimate of time needed to complete: 
+
+3 hours
+
+## Start time: 
+
+12:30 pm
+
+## Finish time: 
+
+3:30 pm
+
+## Actual time needed to complete: 
+
+3 hours
+
+
+## LAB 10 Name of feature: ________________________________
+
+## Estimate of time needed to complete: _____
+
+## Start time: _____
+
+## Finish time: _____
+
+## Actual time needed to complete: _____
