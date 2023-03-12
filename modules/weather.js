@@ -1,6 +1,9 @@
 'use strict'
 const axios = require('axios');
 
+//add cache
+let cache = {};
+
 class Weathers {
   constructor(CityWeatherRequest, i) {
     this.date = CityWeatherRequest.data[i].datetime;
