@@ -17,10 +17,10 @@ const PORT = process.env.PORT || 3002;
 function weatherHandler(request, response) {
   const { lat, lon } = request.query;
   weather(lat, lon)
-    .then(summaries => response.send(summaries))
+    .then(summaries => response.status(200).send(summaries))
     .catch((error) => {
       console.error(error);
-      response.status(200).send('Sorry. Something went wrong!');
+      response.status(500).send('Sorry. Something went wrong!');
     });
 }
 
