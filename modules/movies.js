@@ -12,7 +12,7 @@ class Movies {
     this.overview = searchTomCruise.overview;
     this.average_votes = searchTomCruise.vote_average;
     this.total_votes = searchTomCruise.vote_count;
-    this.image_url = `https://image.tmdb.org/t/p/w500${searchTomCruise.poster_path}`;
+    this.image_url = searchTomCruise.poster_path ? `https://image.tmdb.org/t/p/w500${searchTomCruise.poster_path}` : '';
     this.popularity = searchTomCruise.popularity;
     this.released_on = searchTomCruise.release_date;
   }
